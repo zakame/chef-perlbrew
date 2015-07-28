@@ -21,5 +21,7 @@
 actions :install, :uninstall
 default_action :install
 
+attribute :root,    :kind_of => String,                     :name_attribute => true
+
 attribute :perls,   :kind_of => Array,                      :default => []
 attribute :upgrade, :kind_of => [FalseClass, TrueClass],    :default => true

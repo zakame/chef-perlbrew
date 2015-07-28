@@ -23,7 +23,7 @@ action :install do
     package p
   end
   
-  perlbrew_root = new_resource.name
+  perlbrew_root = new_resource.root
   perlbrew_bin = "#{perlbrew_root}/bin/perlbrew"
   
   directory perlbrew_root
@@ -60,7 +60,7 @@ action :install do
 end
 
 action :uninstall do
-  directory new_resource.name do
+  directory new_resource.root do
     action :delete
     recursive true
   end

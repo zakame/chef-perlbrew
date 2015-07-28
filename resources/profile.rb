@@ -21,6 +21,8 @@
 actions :install, :uninstall
 default_action :install
 
+attribute :script,    :kind_of => String,                 :name_attribute => true
+
 attribute :group,   :kind_of => String,             :default => 'root'
 attribute :owner,   :kind_of => String,             :default => 'root'
 attribute :mode,    :kind_of => [Integer, String],  :default => 0644

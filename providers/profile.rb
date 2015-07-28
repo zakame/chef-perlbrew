@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 action :install do
-    template new_resource.name do 
+    template new_resource.script do 
         group new_resource.group
         owner new_resource.owner
         mode new_resource.mode
@@ -28,7 +28,7 @@ action :install do
 end
 
 action :uninstall do
-    file new_resource.name do
+    file new_resource.script do
         action :delete
     end
 end
