@@ -59,7 +59,7 @@ action :install do
   end
 end
 
-action :uninstall do
+action :remove do
   directory new_resource.root do
     action :delete
     recursive true

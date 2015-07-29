@@ -18,10 +18,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-actions :install, :uninstall
+actions :install, :remove
 default_action :install
 
 attribute :root,    :kind_of => String,                     :name_attribute => true
 
-attribute :perls,   :kind_of => Array,                      :default => []
-attribute :upgrade, :kind_of => [FalseClass, TrueClass],    :default => true
+attribute :perls,   :kind_of => Array,                      :default => node['perlbrew']['perls']
+attribute :upgrade, :kind_of => [FalseClass, TrueClass],    :default => node['perlbrew']['self_upgrade']

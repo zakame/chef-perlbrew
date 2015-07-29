@@ -19,7 +19,4 @@
 
 include_recipe "build-essential"
 
-perlbrew node['perlbrew']['perlbrew_root'] do
-  perls         node['perlbrew']['perls']
-  upgrade       node['perlbrew']['self_upgrade']
-end
+perlbrew node['perlbrew']['perlbrew_root']
