@@ -23,11 +23,11 @@ action :install do
         group new_resource.group
         owner new_resource.owner
         mode new_resource.mode
-        source new_resource.source
+        source new_resource.template
     end
 end
 
-action :uninstall do
+action :remove do
     file new_resource.script do
         action :delete
     end

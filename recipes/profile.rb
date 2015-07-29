@@ -18,5 +18,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License. 
 #
-perlbrew_profile "/etc/profile.d/perlbrew.sh"
+perlbrew_profile node['perlbrew']['profile']['script']
 

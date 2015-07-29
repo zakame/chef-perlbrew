@@ -18,12 +18,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-actions :install, :uninstall
+actions :install, :remove
 default_action :install
 
-attribute :script,    :kind_of => String,                 :name_attribute => true
-
-attribute :group,   :kind_of => String,             :default => 'root'
-attribute :owner,   :kind_of => String,             :default => 'root'
-attribute :mode,    :kind_of => [Integer, String],  :default => 0644
-attribute :source,  :kind_of => String,             :default => 'perlbrew.sh.erb'
+attribute :group,       :kind_of => String,             :default => node['perlbrew']['profile']['group']
+attribute :mode,        :kind_of => [Integer, String],  :default => node['perlbrew']['profile']['mode']
+attribute :owner,       :kind_of => String,             :default => node['perlbrew']['profile']['owner']
+attribute :script,      :kind_of => String,             :default => node['perlbrew']['profile']['script']
+attribute :template,    :kind_of => String,             :default => node['perlbrew']['profile']['template']

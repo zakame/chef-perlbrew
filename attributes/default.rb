@@ -27,3 +27,9 @@ default['perlbrew']['perls'] = []
 default['perlbrew']['install_options'] = ''
 default['perlbrew']['cpanm_options'] = ''
 default['perlbrew']['self_upgrade'] = true
+
+default['perlbrew']['profile']['group'] = 'root'
+default['perlbrew']['profile']['mode'] = 0644
+default['perlbrew']['profile']['owner'] = 'root'
+default['perlbrew']['profile']['script'] = '/etc/profile.d/perlbrew.sh'
+default['perlbrew']['profile']['template'] = 'perlbrew.sh.erb'
