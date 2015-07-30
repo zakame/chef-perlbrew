@@ -21,8 +21,9 @@
 actions :install, :remove
 default_action :install
 
+attribute :script,      :kind_of => String,             :name_attribute => true
+
 attribute :group,       :kind_of => String,             :default => node['perlbrew']['profile']['group']
 attribute :mode,        :kind_of => [Integer, String],  :default => node['perlbrew']['profile']['mode']
 attribute :owner,       :kind_of => String,             :default => node['perlbrew']['profile']['owner']
-attribute :script,      :kind_of => String,             :default => node['perlbrew']['profile']['script']
 attribute :template,    :kind_of => String,             :default => node['perlbrew']['profile']['template']
