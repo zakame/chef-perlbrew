@@ -1,6 +1,6 @@
 #
 # Author:: David A. Golden
-# Contributors:: Jaryd Malbin <jaryd@duckduckgo.com>, J.R. Mash <jrmash@cpan.org>
+# Contributors:: J.R. Mash <jrmash@cpan.org>
 # Cookbook Name:: perlbrew
 # Resource:: default (perlbrew)
 #

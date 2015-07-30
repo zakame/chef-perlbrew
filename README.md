@@ -74,7 +74,7 @@ This LWRP provides actions to install / remove the shell script that enables
 perlbrew for all users.
 ###Actions
 ####:install
-    perlbrew_profile node['perlbrew']['profile']['path'] do
+    perlbrew_profile node['perlbrew']['profile']['script'] do
 	  group         node['perlbrew']['profile']['group']
 	  owner         node['perlbrew']['profile']['owner']
 	  mode          node['perlbrew']['profile']['mode']
@@ -242,7 +242,7 @@ perlbrew, one of which is required to use the other LWRPs in the cookbook:
       perls         node['perlbrew']['perls']
       upgrade       node['perlbrew']['self_upgrade']
     end
-    perlbrew_profile node['perlbrew']['profile']['path'] do
+    perlbrew_profile node['perlbrew']['profile']['script'] do
 	  group         node['perlbrew']['profile']['group']
 	  owner         node['perlbrew']['profile']['owner']
 	  mode          node['perlbrew']['profile']['mode']
