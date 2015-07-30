@@ -1,28 +1,29 @@
 Description
 ===========
+This cookbook provides resource primitives (LWRPs) and recipes that can be used
+to configure, install, and manage the Perlbrew environment.
 
-Installs perlbrew and provides resource/provider types for managing
-perls with perlbrew.
-
-To date, this cookbook has been designed and tested on the following platforms:
+Platforms
+=========
+To date, this cookbook has been developed and tested on the following platforms:
 * Ubuntu
 * Debian
-* CentOS 6
+* CentOS 5/6
 * Amazon Linux
 
 Requirements
 ============
-
-Perlbrew components are downloaded from the web and requires a system-installed
-perl to run.  Perlbrew managed perls are built from source and require a
-standard compiler toolchain. The following packages are required (and will be
-installed if missing)
+Perlbrew requires a system perl and the following packages to be available during
+the installation process:
 
 * curl
-* perl
 * patch
 
-The ```build-essential``` <https://github.com/opscode-cookbooks/build-essential> cookbook will install the packages required for compiling Perl.
+Perlbrew compiles perl from source and requires a standard compiler toolchain to
+be available.  The bundled 'perlbrew' recipe installs this toolchain automatically
+using the [build-essential](https://github.com/opscode-cookbooks/build-essential) cookbook, if they are missing.  The LWRP method of
+configuring and installing perlbrew defers this responsibility to the cookbook
+consumer.
 
 Attributes
 ==========
@@ -43,8 +44,46 @@ Installs/updates perlbrew along with patchperl and cpanm.  This is required for
 use of the LWRP.  Optionally installs perls specified in the
 `node['perlbrew']['perls']` attribute list.
 
+perlbrew::profile
+-----------------
+This recipe installs a file in `/etc/profile.d` that enables perlbrew for all
+users, though the standard caveats mentioned in the perlbrew documentation do
+apply.
+
 Resources/Providers
 ===================
+perlbrew
+--------
+This LWRP provides actions to install / remove perlbrew using the directory
+specified in the `node['perlbrew']['perlbrew_root']` attribute.
+###Actions
+####:install
+    perlbrew node['perlbrew']['perlbrew_root'] do
+      perls         node['perlbrew']['perls']
+      upgrade       node['perlbrew']['self_upgrade']
+    end
+####:remove
+    perlbrew node['perlbrew']['perlbrew_root'] do
+      action        :remove
+    end
+
+perlbrew_profile
+----------------
+
+This LWRP provides actions to install / remove the shell script that enables
+perlbrew for all users.
+###Actions
+####:install
+    perlbrew_profile node['perlbrew']['profile']['path'] do
+	  group         node['perlbrew']['profile']['group']
+	  owner         node['perlbrew']['profile']['owner']
+	  mode          node['perlbrew']['profile']['mode']
+	  template      node['perlbrew']['profile']['template']
+    end
+####:remove
+    perlbrew_profile node['perlbrew']['profile']['path'] do
+      action        :remove
+    end
 
 perlbrew_perl
 -------------
@@ -191,6 +230,21 @@ command, just like the `bash` resource attribute
 Usage
 =====
 
-If you wish to use the LWRP, be sure to include the `perlbrew` recipe, which
-ensures that perlbrew is ready for use.
+This cookbook provides the following methods for configuring and installing
+perlbrew, one of which is required to use the other LWRPs in the cookbook:
 
+###Method 1 - Include this cookbook's recipes in your cookbook/recipe: 
+    include_recipe 'perlbrew'
+    include_recipe 'perlbrew::profile'
+
+###Method 2 - Use this cookbook's LWRPs in your cookbook/recipe:
+    perlbrew node['perlbrew']['perlbrew_root'] do
+      perls         node['perlbrew']['perls']
+      upgrade       node['perlbrew']['self_upgrade']
+    end
+    perlbrew_profile node['perlbrew']['profile']['path'] do
+	  group         node['perlbrew']['profile']['group']
+	  owner         node['perlbrew']['profile']['owner']
+	  mode          node['perlbrew']['profile']['mode']
+	  template      node['perlbrew']['profile']['template']
+    end
