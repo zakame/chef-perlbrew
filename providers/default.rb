@@ -29,7 +29,7 @@ action :install do
   directory perlbrew_root
   
   # if we have perlbrew, upgrade it
-  bash "perlbrew self-upgrade" do
+  bash "perlbrew self-upgrade (#{new_resource.name})" do
     environment ({'PERLBREW_ROOT' => perlbrew_root})
     code <<-EOC
     #{perlbrew_bin} self-upgrade
@@ -57,6 +57,7 @@ action :install do
       action :install
     end
   end
+  new_resource.updated_by_last_action(true)
 end
 
 action :remove do
@@ -64,4 +65,5 @@ action :remove do
     action :delete
     recursive true
   end
+  new_resource.updated_by_last_action(true)
 end

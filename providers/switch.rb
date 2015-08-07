@@ -23,6 +23,7 @@ action :off do
     execute "#{perlbrew_bin} switch-off" do
         only_if { ::File.exists?(perlbrew_bin) }
     end
+    new_resource.updated_by_last_action(true)
 end
 
 action :switch do
@@ -31,4 +32,5 @@ action :switch do
     execute "#{perlbrew_bin} switch #{new_resource.version}" do
         only_if { ::File.exists?(perlbrew_bin) }
     end
+    new_resource.updated_by_last_action(true)
 end

@@ -25,10 +25,12 @@ action :install do
         mode new_resource.mode
         source new_resource.template
     end
+    new_resource.updated_by_last_action(true)
 end
 
 action :remove do
     file new_resource.script do
         action :delete
     end
+    new_resource.updated_by_last_action(true)
 end
