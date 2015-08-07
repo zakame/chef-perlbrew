@@ -1,3 +1,17 @@
+<p align="center">
+    <a href="https://community.opscode.com/cookbooks/perlbrew">
+        <img alt="cookbook" src="https://img.shields.io/cookbook/v/perlbrew.svg"/>
+    </a>
+    &nbsp;&nbsp;&nbsp;
+    <a href="http://www.apache.org/licenses/LICENSE-2.0">
+        <img alt="license" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg"/>
+    </a>
+    &nbsp;&nbsp;&nbsp;
+    <a href="https://gemnasium.com/jrmash/perlbrew">
+        <img alt="depenencies" src="https://gemnasium.com/jrmash/perlbrew.svg"/>
+    </a>
+</p>
+
 Description
 ===========
 This cookbook provides resource primitives (LWRPs) and recipes that can be used
@@ -38,7 +52,7 @@ Recipes
 =======
 
 perlbrew
-----------
+--------
 
 Installs/updates perlbrew along with patchperl and cpanm.  This is required for
 use of the LWRP.  Optionally installs perls specified in the
@@ -248,3 +262,31 @@ perlbrew, one of which is required to use the other LWRPs in the cookbook:
 	  mode          node['perlbrew']['profile']['mode']
 	  template      node['perlbrew']['profile']['template']
     end
+
+
+Authors
+=======
+* David A. Golden <dagolden@cpan.org>
+* J.R. Mash <jrmash@cpan.org>
+
+Contributors
+============
+* Jaryd Malbin <jaryd@duckduckgo.com>
+
+Copyright & License
+===================
+```text
+Copyright (c) 2012-2015, the above named AUTHORS and CONTRIBUTORS
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
