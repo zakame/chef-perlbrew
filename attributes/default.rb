@@ -1,9 +1,9 @@
 #
-# Author:: David A. Golden (<dagolden@cpan.org>)
+# Author:: David A. Golden
 # Cookbook Name:: perlbrew
 # Attribute:: default
 #
-# Copyright 2012, David A. Golden
+# Copyright:: 2012, David A. Golden <dagolden@cpan.org>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

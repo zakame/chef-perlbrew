@@ -1,10 +1,9 @@
 #
-# Author:: David A. Golden
-# Contributors:: J.R. Mash <jrmash@cpan.org>
+# Author:: J.R. Mash
 # Cookbook Name:: perlbrew
 # Resource:: perlbrew_switch
 #
-# Copyright:: 2012, David A. Golden <dagolden@cpan.org>
+# Copyright:: 2015, J.R. Mash <jrmash@cpan.org>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
