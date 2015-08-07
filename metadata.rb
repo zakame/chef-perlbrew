@@ -1,14 +1,15 @@
-name             "perlbrew"
-maintainer       "David Golden"
-maintainer_email "dagolden@cpan.org"
-license          "Apache 2.0"
-version          "0.1.1"
-description      "Installs/Configures perlbrew"
-long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-recipe           "perlbrew::default", "Installs/updates perlbrew"
+name              "perlbrew"
+license           "Apache 2.0"
+maintainer        "J.R. Mash"
+maintainer_email  "jrmash@cpan.org"
+version          "0.2.0"
 
-%w{ debian ubuntu centos amazon }.each do |os|
-  supports os
-end
+description       "Configures and Installs perlbrew"
+issues_url        "https://github.com/jrmash/perlbrew/issues"
+source_url        "https://github.com/jrmash/perlbrew"
 
 depends "build-essential"
+
+[ 'debian', 'ubuntu', 'centos', 'amazon' ].each do |os|
+  supports os
+end
