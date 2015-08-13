@@ -21,7 +21,7 @@ action :off do
     bash "perlbrew switch-off" do
         code <<-EOC
             source #{new_resource.root}/etc/bashrc
-            perlbrew switch-offperl
+            perlbrew switch-off
         EOC
         environment ({'PERLBREW_HOME' => new_resource.root, 'PERLBREW_ROOT' => new_resource.root})
         only_if { ::File.exists?("#{new_resource.root}/bin/perlbrew") }
