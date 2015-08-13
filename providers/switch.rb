@@ -18,18 +18,24 @@
 # limitations under the License.
 #
 action :off do
-    perlbrew_bin = "#{new_resource.root}/bin/perlbrew"
-    
-    execute "#{perlbrew_bin} switch-off" do
+    bash "perlbrew switch-off" do
+        code <<-EOC
+            source #{new_resource.root}/etc/bashrc
+            perlbrew switch-off
+        EOC
+        environment ({'PERLBREW_HOME' => new_resource.root, 'PERLBREW_ROOT' => new_resource.root})
         only_if { ::File.exists?(perlbrew_bin) }
     end
     new_resource.updated_by_last_action(true)
 end
 
 action :switch do
-    perlbrew_bin = "#{new_resource.root}/bin/perlbrew"
-    
-    execute "#{perlbrew_bin} switch #{new_resource.version}" do
+    bash "perlbrew switch #{new_resource.version}" do
+        code <<-EOC
+            source #{new_resource.root}/etc/bashrc
+            perlbrew switch #{new_resource.version}
+        EOC
+        environment ({'PERLBREW_HOME' => new_resource.root, 'PERLBREW_ROOT' => new_resource.root})
         only_if { ::File.exists?(perlbrew_bin) }
     end
     new_resource.updated_by_last_action(true)
