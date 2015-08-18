@@ -17,23 +17,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-action :off do
-    bash "perlbrew switch-off" do
-        code <<-EOC
-            source #{new_resource.root}/etc/bashrc
-            perlbrew switch-off
-        EOC
-        environment ({'PERLBREW_HOME' => new_resource.root, 'PERLBREW_ROOT' => new_resource.root})
-        only_if { ::File.exists?("#{new_resource.root}/bin/perlbrew") }
+action :default do
+    cmd = ''
+      
+    if (new_resource.version =~ /^off$/i)
+        cmd.concat( 'switch-off' )
+    else
+        cmd.concat( "switch #{new_resource.version}" )
     end
-    new_resource.updated_by_last_action(true)
-end
-
-action :switch do
-    bash "perlbrew switch #{new_resource.version}" do
+    
+    bash "#{cmd}" do
         code <<-EOC
             source #{new_resource.root}/etc/bashrc
-            perlbrew switch #{new_resource.version}
+            perlbrew #{cmd}
         EOC
         environment ({'PERLBREW_HOME' => new_resource.root, 'PERLBREW_ROOT' => new_resource.root})
         only_if { ::File.exists?("#{new_resource.root}/bin/perlbrew") }

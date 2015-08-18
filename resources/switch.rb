@@ -17,8 +17,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-actions         :off, :switch
-default_action  :switch
+actions         :default
+default_action  :default
 
 attribute       :root,      :kind_of => String,     :default => '/opt/perlbrew'
 attribute       :version,   :kind_of => String,     :name_attribute => true
