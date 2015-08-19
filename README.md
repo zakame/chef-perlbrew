@@ -97,7 +97,7 @@ perlbrew for all users.
 
   * #####:remove
     
-            perlbrew_profile node['perlbrew']['profile']['path'] do
+            perlbrew_profile '/etc/profile.d/perlbrew.sh' do
               action        :remove
             end
 
@@ -216,15 +216,15 @@ perlbrew, one of which is required to use the other LWRPs in the cookbook:
     include_recipe 'perlbrew::profile'
 
     ## Method 2 - Use this cookbook's LWRPs in your cookbook/recipe:
-    perlbrew node['perlbrew']['perlbrew_root'] do
-      perls         node['perlbrew']['perls']
-      upgrade       node['perlbrew']['self_upgrade']
+    perlbrew <path> do
+      perls         [ <perl-version>, <perl-version> ]
+      upgrade       <true|false>
     end
-    perlbrew_profile node['perlbrew']['profile']['script'] do
-      group         node['perlbrew']['profile']['group']
-      owner         node['perlbrew']['profile']['owner']
-      mode          node['perlbrew']['profile']['mode']
-      template      node['perlbrew']['profile']['template']
+    perlbrew_profile <path> do
+      group         <group-name>
+      owner         <owner-name>
+      mode          <mode>
+      template      <template-file>
     end
 
 
