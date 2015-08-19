@@ -2,7 +2,7 @@ name              "perlbrew"
 license           "Apache 2.0"
 maintainer        "J.R. Mash"
 maintainer_email  "jrmash@cpan.org"
-version          "0.2.0"
+version          "0.3.0"
 
 description       "Configures and Installs perlbrew"
 issues_url        "https://github.com/jrmash/perlbrew/issues"
