@@ -26,7 +26,7 @@ action :default do
         cmd.concat( "switch #{new_resource.version}" )
     end
     
-    bash "#{cmd}" do
+    bash "perlbrew #{cmd}" do
         code <<-EOC
             source #{new_resource.root}/etc/bashrc
             perlbrew #{cmd}
