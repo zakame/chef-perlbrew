@@ -1,32 +1,30 @@
-<p align="center">
-    <a href="https://community.opscode.com/cookbooks/perlbrew">
-        <img alt="cookbook" src="https://img.shields.io/cookbook/v/perlbrew.svg"/>
-    </a>
-    &nbsp;&nbsp;&nbsp;
-    <a href="http://www.apache.org/licenses/LICENSE-2.0">
-        <img alt="license" src="https://img.shields.io/badge/license-Apache%202.0-blue.svg"/>
-    </a>
-    &nbsp;&nbsp;&nbsp;
-    <a href="https://gemnasium.com/jrmash/perlbrew">
-        <img alt="depenencies" src="https://gemnasium.com/jrmash/perlbrew.svg"/>
-    </a>
-</p>
+[![Cookbook](https://img.shields.io/cookbook/v/perlbrew.svg)](https://community.opscode.com/cookbooks/perlbrew)
+[![Dependencies](https://gemnasium.com/jrmash/perlbrew.svg)](https://gemnasium.com/jrmash/perlbrew)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-Description
-===========
+DESCRIPTION
+-----------
 This cookbook provides resource primitives (LWRPs) and recipes that can be used
 to configure, install, and manage the Perlbrew environment.
 
-Platforms
-=========
-To date, this cookbook has been developed and tested on the following platforms:
-* Ubuntu
-* Debian
-* CentOS 5/6
-* Amazon Linux
+PLATFORMS
+---------
+This cookbook is tested on the following platforms:
 
-Requirements
-============
+* CentOS/RHEL 5.11 64-bit
+* CentOS/RHEL 6.6 64-bit
+* Debian 6.0.10
+* Debian 7.8
+* Ubuntu 10.04
+* Ubuntu 12.04
+* Ubuntu 14.04
+
+Unlisted platforms in the same family, of similar or equivalent versions may work
+with or without modification to this cookbook.  Pull requests to add support for
+other platforms are welcome.
+
+REQUIREMENTS
+------------
 Perlbrew requires a system perl and the following packages to be available during
 the installation process:
 
@@ -39,244 +37,214 @@ using the [build-essential](https://github.com/opscode-cookbooks/build-essential
 configuring and installing perlbrew defers this responsibility to the cookbook
 consumer.
 
-Attributes
-==========
-
+ATTRIBUTES
+----------
 * `node['perlbrew']['perlbrew_root'] = "/opt/perlbrew"` - Sets the `PERLBREW_ROOT` environment variable
 * `node['perlbrew']['perls'] = []` - An array of perls to install, e.g. `["perl-5.14.2", "perl-5.12.3"]`
 * `node['perlbrew']['install_options'] = ''` - A string of command line options for `perlbrew install`, e.g. `-D usethreads` for building all perls with threads
 * `node['perlbrew']['cpanm_options'] = ''` - A string of command line options for `cpanm`, e.g. `--notest` for installing modules without running tests
 * `node['perlbrew']['self_upgrade'] = true` - Set to false if you don't want perlbrew upgraded to the latest version automatically
 
-Recipes
-=======
-
-perlbrew
---------
-
+RECIPES
+-------
+###perlbrew
 Installs/updates perlbrew along with patchperl and cpanm.  This is required for
 use of the LWRP.  Optionally installs perls specified in the
 `node['perlbrew']['perls']` attribute list.
 
-perlbrew::profile
------------------
+###perlbrew::profile
 This recipe installs a file in `/etc/profile.d` that enables perlbrew for all
 users, though the standard caveats mentioned in the perlbrew documentation do
 apply.
 
-Resources/Providers
-===================
-perlbrew
---------
+RESOURCES / PROVIDERS
+---------------------
+###perlbrew
 This LWRP provides actions to install / remove perlbrew using the directory
 specified in the `node['perlbrew']['perlbrew_root']` attribute.
-###Actions
-####:install
-    perlbrew node['perlbrew']['perlbrew_root'] do
-      perls         node['perlbrew']['perls']
-      upgrade       node['perlbrew']['self_upgrade']
-    end
-####:remove
-    perlbrew node['perlbrew']['perlbrew_root'] do
-      action        :remove
-    end
 
-perlbrew_profile
-----------------
+* ####Actions
+  * ***:install (default)***
 
+            perlbrew '/opt/perlbrew' do
+              perls         [ 'perl-5.10.1', 'perl-5.14.2' ]
+              upgrade       true
+            end
+
+  * ***:remove***
+    
+            perlbrew '/opt/perlbrew' do
+              action        :remove
+            end
+
+* ####Attributes
+  * :perls - An array of strings representing perls to brew / install.
+  * :upgrade - A boolean flag to disable/enable the automatic upgrading of perlbrew. 
+
+###perlbrew_profile
 This LWRP provides actions to install / remove the shell script that enables
 perlbrew for all users.
-###Actions
-####:install
-    perlbrew_profile node['perlbrew']['profile']['script'] do
-	  group         node['perlbrew']['profile']['group']
-	  owner         node['perlbrew']['profile']['owner']
-	  mode          node['perlbrew']['profile']['mode']
-	  template      node['perlbrew']['profile']['template']
-    end
-####:remove
-    perlbrew_profile node['perlbrew']['profile']['path'] do
-      action        :remove
-    end
 
-perlbrew_perl
--------------
+* ####Actions
+  * ***:install (default)***
 
-This LWRP installs perls into `node['perlbrew']['perlbrew_root']` using
-perlbrew.
+            perlbrew_profile '/etc/profile.d/perlbrew.sh' do
+	          mode          0644
+    	      group         'root'
+              owner         'root'
+	          template      'perlbrew.sh.erb'
+            end
 
-    # option 1
-    perlbrew_perl perl-VERSION do
-      action :install
-    end
+  * #####:remove
+    
+            perlbrew_profile node['perlbrew']['profile']['path'] do
+              action        :remove
+            end
 
-    # option 2
-    perlbrew_perl NICKNAME do
-      version perl-VERSION
-      action :install
-    end
+* ####Attributes
+  * :mode - The file's default permissions.
+  * :group - The file's group association.
+  * :owner - The file's owner.
+  * :template - The template used to create the file.
 
-Example:
+###perlbrew_perl
+This LWRP provides actions to brew and install perls into `node['perlbrew']['perlbrew_root']`.
 
-    perlbrew_perl '5.14.2' do
-      version 'perl-5.14.2'
-      action :install
-    end
+* ####Actions
+  * ***:install (default)***
 
-This is equivalent to `perlbrew install perl-5.14.2 --as 5.14.2`.
+            ## Equivalent to 'perlbrew install perl-5.14.2'
+            perlbrew_perl 'perl-5.14.2' do
+              action :install
+            end
 
-Actions:
+            ## Equivalent to 'perlbrew install perl-5.14.2 --as 5.14.2'
+            perlbrew_perl '5.14.2' do
+              version 'perl-5.14.2'
+              action :install
+            end
+  
+  * ***:remove***
+   
+            perlbrew_perl 'perl-5.14.2' do
+              action :remove
+            end
 
-* :install - install the specified perl (default action)
-* :remove - uninstall the specified perl
+* ####Attributes
+  * :install_options - The options to be provided during brewing / installation.
+  * :version - The version of perl to install, in the `perl-X.Y.Z` format that perlbrew expects.
 
-Attributes:
+###perlbrew_switch
+This LWRP provides an action to switch between brewed perl installations / system perl.
 
-* :version - the version of perl to install, in the "perl-X.Y.Z" format that perlbrew expects
-This is based on the perlbrew_perl name if not provided.
-* :install_options - overrides the default install options on the node. (Not recommended.)
+* ####Actions
+  * ***:default (default)***
 
-perlbrew_lib
-------------
+            perlbrew_switch 'off'
+            perlbrew_switch 'perl-5.14.2'
 
+###perlbrew_lib
 This LWRP creates a perlbrew-based local::lib library for a particular perlbrew
 perl.
 
-Example:
+* ####Actions
+  * ***:create (default)***
 
-    perlbrew_lib 'perl-5.14.2@mylib' do
-      action :create
-    end
+            perlbrew_lib 'perl-5.14.2@mylib' do
+              action :create
+            end
 
-This is equivalent to `perlbrew lib create perl-5.14.2@mylib`
+  * ***:delete***
 
-Action:
+            perlbrew_lib 'perl-5.14.2@mylib' do
+              action :delete
+            end
 
-* :create - creates the local::lib (default action)
-* :delete - removes the local::lib
+* ####Attributes
+  * :perlbrew - The brewed perl to attach the library to (e.g. perl-5.14.2), and it is not
+     installed, the `perlbrew_perl` LWRP will be used to brew and install it.  If this 
+     attribute is not specified, it will be derived from the `perlbrew_lib` name.
 
-Attributes:
-
-* :perlbrew - the perlbrew perl to attach the library to (e.g. 'perl-5.14.2').
-It will be derived from the perlbrew_lib name if not provided.  The
-perlbrew perl will be installed using the perlbrew_perl LRWP if it has not already
-been installed.
-
-perlbrew_cpanm
---------------
-
+###perlbrew_cpanm
 This LWRP installs CPAN modules to a given perlbrew perl or local::lib using
 cpanm (App::cpanminus).
 
-Example:
+* ####Actions
+  * ***:install (default)***
 
-    perlbrew_cpanm 'Modern Perl modules' do
-      perlbrew 'perl-5.14.2@mylib'
-      modules ['Modern::Perl', 'Task::Kensho']
-    end
+            perlbrew_cpanm 'Modern Perl modules' do
+              modules ['Modern::Perl', 'Task::Kensho']
+              perlbrew 'perl-5.14.2@mylib'
+            end
 
-This is equivalent to
+* ####Attributes
+  * :modules - The list of module names to pass to `cpanm`.
+  * :perlbrew - The brewed perl (and optional library) to use for installing modules.
 
-    $ perlbrew use perl-5.14.2@mylib
-    $ cpanm Modern::Perl Task::Kensho
-
-Note that the resource name "Modern Perl modules" will be associated with a set of
-modules only once.  The name should be unique for any particular chef run.
-
-Action:
-
-* :install - install the list of modules (default action) 
-
-Attributes:
-
-* :perlbrew - the perlbrew perl (and optional library) to use for installing
-modules (REQUIRED)
-* :modules - an array of module names to pass to cpanm.  Any legal input
-to cpanm is allowed.
-* :options - a string of options to pass to cpanm.  Any legal options to
-cpanm is allowed.
-
-perlbrew_run
-------------
-
+###perlbrew_run
 This LWRP runs a bash command in the context of a given perlbrew perl or local::lib.
 
-Example 1:
+* ####Actions
+  * ***:run (default)***
 
-    perlbrew_run 'Perl hello world' do
-      perlbrew 'perl-5.14.2@mylib'
-      command "perl -wE 'say q{Hello World}'"
-    end
+            ##Execute as script file.
+            perlbrew_run 'hello-world.pl' do
+               perlbrew 'perl-5.14.2@mylib'
+            end
 
-This is equivalent to
+            ## Execute as a script string.
+            perlbrew_run 'Perl hello world' do
+              perlbrew 'perl-5.14.2@mylib'
+              command "perl -wE 'say q{Hello World}'"
+            end
 
-    $ perlbrew use perl-5.14.2@mylib
-    $ perl -wE 'say q{Hello World}'
+* ####Attributes
+  * :command - The bash command to run, defaulting to the resource name if not
+               specified.
+  * :cwd - The directory to change into prior to running the command.
+  * :environment - The hash of environment variables to set prior to running the
+                   command
+  * :perlbrew - The brewed perl (and optional library) to use for running the command.
 
-Example 2:
-
-    perlbrew_run 'hello-world.pl' do
-      perlbrew 'perl-5.14.2@mylib'
-    end
-
-This is equivalent to
-
-    $ perlbrew use perl-5.14.2@mylib
-    $ hello-world.pl
-
-Note that the resource name will only be executed once for a given chef run.
-
-Action:
-
-* :run - runs the command (default action) 
-
-Attributes:
-
-* :perlbrew - the perlbrew perl (and optional library) to be enabled prior
-to running the command (REQUIRED)
-* :command - the bash command to run; taken from the resource name if not
-provided
-* :cwd - directory to enter prior to running the command, just like the `bash`
-resource attribute
-* :environment - hash of environment variables to set prior to running the
-command, just like the `bash` resource attribute
-
-Usage
-=====
-
+USAGE
+-----
 This cookbook provides the following methods for configuring and installing
 perlbrew, one of which is required to use the other LWRPs in the cookbook:
 
-###Method 1 - Include this cookbook's recipes in your cookbook/recipe: 
+    ## Method 1 - Include this cookbook's recipes in your cookbook/recipe: 
     include_recipe 'perlbrew'
     include_recipe 'perlbrew::profile'
 
-###Method 2 - Use this cookbook's LWRPs in your cookbook/recipe:
+    ## Method 2 - Use this cookbook's LWRPs in your cookbook/recipe:
     perlbrew node['perlbrew']['perlbrew_root'] do
       perls         node['perlbrew']['perls']
       upgrade       node['perlbrew']['self_upgrade']
     end
     perlbrew_profile node['perlbrew']['profile']['script'] do
-	  group         node['perlbrew']['profile']['group']
-	  owner         node['perlbrew']['profile']['owner']
-	  mode          node['perlbrew']['profile']['mode']
-	  template      node['perlbrew']['profile']['template']
+      group         node['perlbrew']['profile']['group']
+      owner         node['perlbrew']['profile']['owner']
+      mode          node['perlbrew']['profile']['mode']
+      template      node['perlbrew']['profile']['template']
     end
 
 
-Authors
-=======
+AUTHOR(S)
+---------
 * David A. Golden <dagolden@cpan.org>
 * J.R. Mash <jrmash@cpan.org>
 
-Contributors
-============
+CONTRIBUTOR(S)
+--------------
 * Jaryd Malbin <jaryd@duckduckgo.com>
 
-Copyright & License
-===================
+MAINTAINER(S)
+-------------
+* J.R. Mash <jrmash@cpan.org>
+
+COPYRIGHT & LICENSE
+-------------------
 ```text
-Copyright (c) 2012-2015, the above named AUTHORS and CONTRIBUTORS
+Copyright (c) 2012-2015, the above named AUTHORS, CONTRIBUTORS, and MAINTIANERS
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
