@@ -1,0 +1,39 @@
+Metrics/LineLength:
+  Max: 120
+Style/CaseIndentation:
+  IndentOneStep: true
+Style/Documentation:
+  Enabled: false
+Style/IfUnlessModifier:
+  Enabled: false
+Style/Next:
+  Enabled: false
+Style/ParenthesesAroundCondition:
+  Enabled: false
+Style/TrailingComma:
+  EnforcedStyleForMultiline: comma
+Style/WordArray:
+  MinSize: 8
+
+## What is this, python?  Right, let's
+## skip whitespace-based cops then.
+Style/CommentIndentation:
+  Enabled: false
+Style/EmptyLines:
+  Enabled: false
+Style/EmptyLineBetweenDefs:
+  Enabled: false
+Style/ExtraSpacing:
+  Enabled: false
+Style/SingleSpaceBeforeFirstArg:
+  Enabled: false
+Style/SpaceInsideBrackets:
+  Enabled: false
+Style/SpaceInsideHashLiteralBraces:
+  Enabled: false
+Style/SpaceInsideParens:
+  Enabled: false
+Style/TrailingBlankLines:
+  Enabled: false
+Style/TrailingWhitespace:
+  Enabled: false
