@@ -1,0 +1,3 @@
+--color
+--format documentation
+--pattern test/unit/**/*_spec.rb
