@@ -1,6 +1,6 @@
 Metrics/LineLength:
   Max: 120
-Style/CaseIndentation:
+Layout/CaseIndentation:
   IndentOneStep: true
 Style/Documentation:
   Enabled: false
@@ -10,30 +10,34 @@ Style/Next:
   Enabled: false
 Style/ParenthesesAroundCondition:
   Enabled: false
-Style/TrailingComma:
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
 Style/WordArray:
   MinSize: 8
 
 ## What is this, python?  Right, let's
 ## skip whitespace-based cops then.
-Style/CommentIndentation:
+Layout/CommentIndentation:
   Enabled: false
-Style/EmptyLines:
+Layout/EmptyLines:
   Enabled: false
-Style/EmptyLineBetweenDefs:
+Layout/EmptyLineBetweenDefs:
   Enabled: false
-Style/ExtraSpacing:
+Layout/ExtraSpacing:
   Enabled: false
-Style/SingleSpaceBeforeFirstArg:
+Layout/SpaceBeforeFirstArg:
   Enabled: false
-Style/SpaceInsideBrackets:
+Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: false
-Style/SpaceInsideHashLiteralBraces:
+Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
-Style/SpaceInsideParens:
+Layout/SpaceInsideParens:
   Enabled: false
-Style/TrailingBlankLines:
+Layout/TrailingBlankLines:
   Enabled: false
-Style/TrailingWhitespace:
+Layout/TrailingWhitespace:
   Enabled: false
