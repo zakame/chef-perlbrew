@@ -17,8 +17,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-actions         :default
-default_action  :default
 
-attribute       :root,      :kind_of => String,     :default => '/opt/perlbrew'
-attribute       :version,   :kind_of => String,     :name_attribute => true
+resource_name :perlbrew_switch
+
+property :version, String, name_property: true
+property :root, String, default: node['perlbrew']['perlbrew_root']
+
+action :default do
+  cmd = 'switch'
+  if new_resource.version =~ /^off$/i
+    cmd.concat('-off')
+  else
+    cmd.concat(" #{new_resource.version}")
+  end
+
+  bash "perlbrew #{cmd}" do
+    environment(
+      'PERLBREW_ROOT' => new_resource.root,
+      'PERLBREW_HOME' => new_resource.root,
+    )
+    code <<-EOC
+    source #{new_resource.root}/etc/bashrc
+    perlbrew #{cmd}
+    EOC
+    only_if { ::File.exist?("#{new_resource.root}/bin/perlbrew") }
+  end
+end

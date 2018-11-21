@@ -18,12 +18,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-actions :install, :remove
-default_action :install
 
-attribute :script,      :kind_of => String,             :name_attribute => true
+resource_name :perlbrew_profile
 
-attribute :group,       :kind_of => String,             :default => node['perlbrew']['profile']['group']
-attribute :mode,        :kind_of => [Integer, String],  :default => node['perlbrew']['profile']['mode']
-attribute :owner,       :kind_of => String,             :default => node['perlbrew']['profile']['owner']
-attribute :template,    :kind_of => String,             :default => node['perlbrew']['profile']['template']
+property :script, String, name_property: true
+property :group, String, default: node['perlbrew']['profile']['group']
+property :mode, [Integer, String], default: node['perlbrew']['profile']['mode']
+property :owner, String, default: node['perlbrew']['profile']['owner']
+property :template, String, default: node['perlbrew']['profile']['template']
+property :cookbook, String, default: 'perlbrew'
+
+action :install do
+  with_run_context :root do
+    edit_resource(:template, new_resource.name) do |new_resource|
+      source new_resource.template
+      cookbook new_resource.cookbook
+      owner new_resource.owner
+      group new_resource.group
+      mode new_resource.mode
+    end
+  end
+end
+
+action :remove do
+  file new_resource.script do
+    action :delete
+  end
+end

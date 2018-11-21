@@ -17,10 +17,56 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-actions :install, :remove
-default_action :install
 
-attribute :root,    :kind_of => String,                     :name_attribute => true
+resource_name :perlbrew
 
-attribute :perls,   :kind_of => Array,                      :default => node['perlbrew']['perls']
-attribute :upgrade, :kind_of => [FalseClass, TrueClass],    :default => node['perlbrew']['self_upgrade']
+property :root, String, name_property: true
+
+property :perls, Array, default: node['perlbrew']['perls']
+property :upgrade, [true, false], default: node['perlbrew']['self_upgrade']
+
+action :install do
+  %w( patch perl curl ).each do |p|
+    package p
+  end
+
+  perlbrew_root = new_resource.root
+  perlbrew_bin = "#{perlbrew_root}/bin/perlbrew"
+
+  directory perlbrew_root
+
+  # if we have perlbrew, upgrade it
+  bash "perlbrew self-upgrade (#{new_resource.name})" do
+    environment('PERLBREW_ROOT' => perlbrew_root)
+    code <<-EOC
+    #{perlbrew_bin} self-upgrade
+    #{perlbrew_bin} -f install-patchperl
+    #{perlbrew_bin} -f install-cpanm
+    EOC
+    only_if { ::File.exist?(perlbrew_bin) && new_resource.upgrade }
+  end
+
+  # if not, install it
+  bash 'perlbrew-install' do
+    cwd Chef::Config[:file_cache_path]
+    environment('PERLBREW_ROOT' => perlbrew_root)
+    code <<-EOC
+    curl -kL http://install.perlbrew.pl > perlbrew-install
+    source perlbrew-install
+    #{perlbrew_root}/bin/perlbrew -f install-cpanm
+    EOC
+    not_if { ::File.exist?(perlbrew_bin) }
+  end
+
+  # were any perls requested in attributes?
+  new_resource.perls.each do |p|
+    perlbrew_perl p
+  end
+end
+
+action :remove do
+  directory new_resource.root do
+    action :delete
+    recursive true
+  end
+end

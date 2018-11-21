@@ -18,13 +18,33 @@
 # limitations under the License.
 #
 
-actions :create, :delete
+resource_name :perlbrew_lib
 
-attribute :created, :default => false
-attribute :perlbrew, :kind_of => String
-attribute :perlbrew_installed, :default => false
+property :lib, String, name_property: true
+property :perlbrew, String
 
-def initialize(*args)
-  super
-  @action = :create
+action :create do
+  new_resource.perlbrew(new_resource.lib[/[^@]+/]) unless new_resource.perlbrew
+  perlbrew_perl new_resource.perlbrew do
+    not_if { ::File.exist?("#{node['perlbrew']['perlbrew_root']}/perls/#{new_resource.perlbrew}") }
+  end
+  execute "Create perlbrew lib #{new_resource.lib}" do
+    environment(
+      'PERLBREW_ROOT' => node['perlbrew']['perlbrew_root'],
+      'PERLBREW_HOME' => node['perlbrew']['perlbrew_root'],
+    )
+    command "#{node['perlbrew']['perlbrew_root']}/bin/perlbrew lib create #{new_resource.lib}"
+    not_if { ::File.exist?("#{node['perlbrew']['perlbrew_root']}/libs/#{new_resource.lib}") }
+  end
+end
+
+action :delete do
+  execute "Remove perlbrew #{new_resource.lib}" do
+    environment(
+      'PERLBREW_ROOT' => node['perlbrew']['perlbrew_root'],
+      'PERLBREW_HOME' => node['perlbrew']['perlbrew_root'],
+    )
+    command "#{node['perlbrew']['perlbrew_root']}/bin/perlbrew lib delete #{new_resource.lib}"
+    only_if { ::File.exist?("#{node['perlbrew']['perlbrew_root']}/libs/#{new_resource.lib}") }
+  end
 end

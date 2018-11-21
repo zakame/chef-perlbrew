@@ -18,9 +18,14 @@
 # limitations under the License.
 #
 
-actions :install, :run
-default_action :install
+resource_name :perlbrew_cpanm
 
-attribute :options, :kind_of => String
-attribute :perlbrew, :kind_of => String, :required => true
-attribute :modules, :kind_of => Array, :default => []
+property :options, String, default: node['perlbrew']['cpanm_options']
+property :perlbrew, String, required: true
+property :modules, Array, default: []
+
+action :install do
+  perlbrew_run "cpanm #{new_resource.options} #{new_resource.modules.join(' ')}" do
+    perlbrew new_resource.perlbrew
+  end
+end
