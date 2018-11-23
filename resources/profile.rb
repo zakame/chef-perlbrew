@@ -29,14 +29,12 @@ property :template, String, default: node['perlbrew']['profile']['template']
 property :cookbook, String, default: 'perlbrew'
 
 action :install do
-  with_run_context :root do
-    edit_resource(:template, new_resource.name) do |new_resource|
-      source new_resource.template
-      cookbook new_resource.cookbook
-      owner new_resource.owner
-      group new_resource.group
-      mode new_resource.mode
-    end
+  template new_resource.name do
+    source new_resource.template
+    cookbook new_resource.cookbook
+    owner new_resource.owner
+    group new_resource.group
+    mode new_resource.mode
   end
 end
 
