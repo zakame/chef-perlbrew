@@ -19,6 +19,6 @@
 # limitations under the License.
 #
 
-include_recipe "build-essential"
+build_essential
 
 perlbrew node['perlbrew']['perlbrew_root']

@@ -18,13 +18,34 @@
 # limitations under the License.
 #
 
-actions :install, :remove
+resource_name :perlbrew_perl
 
-attribute :version, :kind_of => String
-attribute :install_options, :kind_of => String
-attribute :installed, :default => false
+property :version, String, name_property: true
+property :install_options, String
+property :installed, [true, false], default: false
 
-def initialize(*args)
-  super
-  @action = :install
+load_current_value do
+  installed ::File.exist?("#{node['perlbrew']['perlbrew_root']}/perls/#{name}")
+end
+
+action :install do
+  unless new_resource.installed
+    new_resource.version(new_resource.name) unless new_resource.version
+    new_resource.install_options(node['perlbrew']['install_options']) unless new_resource.install_options
+
+    execute "Install perlbrew perl #{new_resource.name}" do
+      environment('PERLBREW_ROOT' => node['perlbrew']['perlbrew_root'])
+      command "#{node['perlbrew']['perlbrew_root']}/bin/perlbrew install #{new_resource.version} --as #{new_resource.name} #{new_resource.install_options}"
+      creates "#{node['perlbrew']['perlbrew_root']}/perls/#{new_resource.name}"
+    end
+  end
+end
+
+action :remove do
+  if new_resource.installed
+    execute "Remove perlbrew perl #{new_resource.name}" do
+      environment('PERLBREW_ROOT' => node['perlbrew']['perlbrew_root'])
+      command "#{node['perlbrew']['perlbrew_root']}/bin/perlbrew uninstall #{new_resource.name}"
+    end
+  end
 end

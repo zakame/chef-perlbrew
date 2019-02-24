@@ -18,14 +18,26 @@
 # limitations under the License.
 #
 
-actions :run
+resource_name :perlbrew_run
 
-attribute :command, :name_attribute => true, :kind_of => String
-attribute :perlbrew, :kind_of => String, :required => true
-attribute :cwd, :kind_of => String
-attribute :environment, :kind_of => Hash, :default => {}
+property :command, String, name_property: true
+property :perlbrew, String, required: true
+property :cwd, String
+property :environment, Hash, default: {}
 
-def initialize(*args)
-  super
-  @action = :run
+action :run do
+  perlbrew_env = {
+    'PERLBREW_ROOT' => node['perlbrew']['perlbrew_root'],
+    'PERLBREW_HOME' => node['perlbrew']['perlbrew_root'],
+    'PERL_CPANM_HOME' => "#{Chef::Config[:file_cache_path]}/cpanm",
+  }
+  bash new_resource.name do
+    environment new_resource.environment.merge(perlbrew_env)
+    cwd new_resource.cwd if new_resource.cwd
+    code <<-EOC
+    source #{node['perlbrew']['perlbrew_root']}/etc/bashrc
+    perlbrew use #{new_resource.perlbrew}
+    #{new_resource.command}
+    EOC
+  end
 end
