@@ -8,9 +8,11 @@
 *.bk
 *.bkup
 
+Berksfile.lock
 .bundle/
 .cache/
 .kitchen/
+.kitchen.local.yml
 .vagrant/
 .vagrant.d/
 bin/
