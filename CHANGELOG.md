@@ -3,9 +3,6 @@
 * Cookbook now maintained by Zak B. Elep, thanks J.R. Mash!
 * Added CI testing.
 
-## 0.3.1
-* Added 'matchers.rb' for use with ChefSpec.
-
 ## 0.3.0
 * Fixed the 'switch' resource provider to actually work.
 * Fixed some things that foodcritic was complaining about.

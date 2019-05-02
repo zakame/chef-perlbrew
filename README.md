@@ -240,7 +240,7 @@ MAINTAINER(S)
 COPYRIGHT & LICENSE
 -------------------
 ```text
-Copyright (c) 2012-2015, the above named AUTHORS, CONTRIBUTORS, and MAINTAINERS
+Copyright (c) 2012-2019, the above named AUTHORS, CONTRIBUTORS, and MAINTAINERS
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
