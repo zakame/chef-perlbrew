@@ -133,7 +133,7 @@ This LWRP provides actions to brew and install perls into `node['perlbrew']['per
 ### perlbrew_switch
 This LWRP provides an action to switch between brewed perl installations / system perl.
 
-* ####Actions
+* Actions
   * ***:default (default)***
 
             perlbrew_switch 'off'
