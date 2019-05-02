@@ -1,3 +1,8 @@
+## 0.4.0
+* Updated for Chef 14 fixes.
+* Cookbook now maintained by Zak B. Elep, thanks J.R. Mash!
+* Added CI testing.
+
 ## 0.3.1
 * Added 'matchers.rb' for use with ChefSpec.
 

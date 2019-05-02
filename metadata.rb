@@ -2,7 +2,7 @@ name              'perlbrew'
 license           'Apache-2.0'
 maintainer        'J.R. Mash'
 maintainer_email  'jrmash@cpan.org'
-version           '0.3.1'
+version           '0.4.0'
 chef_version      '>= 12.5'
 
 description       'Configures and Installs perlbrew'
