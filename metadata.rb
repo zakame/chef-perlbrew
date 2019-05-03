@@ -2,7 +2,7 @@ name              'perlbrew'
 license           'Apache-2.0'
 maintainer        'Zak B. Elep'
 maintainer_email  'zakame@cpan.org'
-version           '0.4.0'
+version           '0.4.1'
 chef_version      '>= 12.5'
 
 description       'Configures and Installs perlbrew'
