@@ -33,6 +33,11 @@ action :install do
   perlbrew_root = new_resource.root
   perlbrew_bin = "#{perlbrew_root}/bin/perlbrew"
 
+  # use a known release version of the installer and save its checksum
+  # here for verifying later during install
+  perlbrew_install = 'https://raw.githubusercontent.com/gugod/App-perlbrew/release-0.86/perlbrew-install'
+  perlbrew_install_sha256 = '29bb40292e786336a58ace7b9db4d8dc9ad5ace3f3cb35d9978caddac2eba12c'
+
   directory perlbrew_root
 
   # if we have perlbrew, upgrade it
@@ -51,9 +56,11 @@ action :install do
     cwd Chef::Config[:file_cache_path]
     environment('PERLBREW_ROOT' => perlbrew_root)
     code <<-EOC
-    curl -kL http://install.perlbrew.pl > perlbrew-install
-    source perlbrew-install
+    curl -fsSL #{perlbrew_install} > ./perlbrew-install
+    echo '#{perlbrew_install_sha256} *perlbrew-install' | sha256sum -c -
+    bash ./perlbrew-install
     #{perlbrew_root}/bin/perlbrew -f install-cpanm
+    rm ./perlbrew-install
     EOC
     not_if { ::File.exist?(perlbrew_bin) }
   end

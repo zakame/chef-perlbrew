@@ -1,5 +1,6 @@
 ## 0.4.1
 * Add Amazon Linux 2 on tested/supported platforms.
+* Tweak perlbrew installation so it verifies the installer script before proceeding.
 
 ## 0.4.0
 * Updated for Chef 14 fixes.
