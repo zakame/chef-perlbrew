@@ -11,6 +11,7 @@ PLATFORMS
 ---------
 This cookbook is tested on the following platforms:
 
+* Amazon Linux 2
 * CentOS/RHEL 7.x
 * Debian 9.x
 * Ubuntu 18.04 LTS
