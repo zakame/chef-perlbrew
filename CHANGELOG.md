@@ -1,3 +1,6 @@
+## 0.4.1
+* Add Amazon Linux 2 on tested/supported platforms.
+
 ## 0.4.0
 * Updated for Chef 14 fixes.
 * Cookbook now maintained by Zak B. Elep, thanks J.R. Mash!
