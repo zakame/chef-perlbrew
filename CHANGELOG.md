@@ -1,3 +1,8 @@
+## 0.4.2
+* Update documentation to remove deprecated LWRP terminology.
+* More tweaking of perlbrew installation.
+* Pin kitchen-dokken Chef to 14 (until a newer chef-workstation with Chef 15 appears.)
+
 ## 0.4.1
 * Add Amazon Linux 2 on tested/supported platforms.
 * Tweak perlbrew installation so it verifies the installer script before proceeding.
