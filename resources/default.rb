@@ -40,29 +40,38 @@ action :install do
 
   directory perlbrew_root
 
+  # start a resource to install cpanm if needed later
+  bash 'perlbrew install-cpanm' do
+    environment('PERLBREW_ROOT' => perlbrew_root)
+    code "#{perlbrew_bin} -f install-cpanm"
+    action :nothing
+  end
+
   # if we have perlbrew, upgrade it
   bash "perlbrew self-upgrade (#{new_resource.name})" do
     environment('PERLBREW_ROOT' => perlbrew_root)
     code <<-EOC
     #{perlbrew_bin} self-upgrade
     #{perlbrew_bin} -f install-patchperl
-    #{perlbrew_bin} -f install-cpanm
     EOC
     only_if { ::File.exist?(perlbrew_bin) && new_resource.upgrade }
+    notifies :run, 'bash[perlbrew install-cpanm]', :immediately
   end
 
   # if not, install it
-  bash 'perlbrew-install' do
-    cwd Chef::Config[:file_cache_path]
-    environment('PERLBREW_ROOT' => perlbrew_root)
-    code <<-EOC
-    curl -fsSL #{perlbrew_install} > ./perlbrew-install
-    echo '#{perlbrew_install_sha256} *perlbrew-install' | sha256sum -c -
-    bash ./perlbrew-install
-    #{perlbrew_root}/bin/perlbrew -f install-cpanm
-    rm ./perlbrew-install
-    EOC
-    not_if { ::File.exist?(perlbrew_bin) }
+  unless ::File.exist?(perlbrew_bin)
+    remote_file "#{Chef::Config[:file_cache_path]}/perlbrew-install" do
+      source perlbrew_install
+      checksum perlbrew_install_sha256
+      owner 'root'
+      group 'root'
+      mode '0755'
+    end
+    bash 'perlbrew-install' do
+      environment('PERLBREW_ROOT' => perlbrew_root)
+      code "#{Chef::Config[:file_cache_path]}/perlbrew-install"
+      notifies :run, 'bash[perlbrew install-cpanm]', :immediately
+    end
   end
 
   # were any perls requested in attributes?
