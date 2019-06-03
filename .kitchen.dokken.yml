@@ -1,7 +1,6 @@
 ---
 driver:
   name: dokken
-  chef_version: 14
   privileged: true
   volumes:
     - /sys/fs/cgroup:/sys/fs/cgroup
