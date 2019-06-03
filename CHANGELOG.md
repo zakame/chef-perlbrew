@@ -1,3 +1,8 @@
+## 0.5.0
+* Bump minimum required Chef version to 14.
+* Add a TESTING.md to document how to test chef-perlbrew.
+* Unpin kitchen-dokken Chef from 14 as chefdk/chef-workstation is now updated.
+
 ## 0.4.2
 * Update documentation to remove deprecated LWRP terminology.
 * More tweaking of perlbrew installation.
