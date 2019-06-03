@@ -55,7 +55,7 @@ This recipe installs a file in `/etc/profile.d` that enables perlbrew for all
 users, though the standard caveats mentioned in the perlbrew documentation do
 apply.
 
-RESOURCES / PROVIDERS
+RESOURCES
 ---------------------
 ### perlbrew
 This resource provides actions to install / remove perlbrew using the directory
