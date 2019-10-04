@@ -21,7 +21,7 @@ env:
     - CMD="chef exec foodcritic ."
     - CMD="kitchen verify amazonlinux-2"
     - CMD="kitchen verify centos-7"
-    - CMD="kitchen verify debian-9"
+    - CMD="kitchen verify debian-10"
     - CMD="kitchen verify ubuntu-1804"
 
 matrix:
