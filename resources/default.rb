@@ -35,8 +35,8 @@ action :install do
 
   # use a known release version of the installer and save its checksum
   # here for verifying later during install
-  perlbrew_install = 'https://raw.githubusercontent.com/gugod/App-perlbrew/release-0.86/perlbrew-install'
-  perlbrew_install_sha256 = '29bb40292e786336a58ace7b9db4d8dc9ad5ace3f3cb35d9978caddac2eba12c'
+  perlbrew_install = 'https://raw.githubusercontent.com/gugod/App-perlbrew/release-0.87/perlbrew-install'
+  perlbrew_install_sha256 = 'dfe755b8204ee994df3d1e9f030a0c7dc09ac837cec6e391ea254d54f92bd7ea'
 
   directory perlbrew_root
 
