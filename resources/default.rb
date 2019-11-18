@@ -26,7 +26,7 @@ property :perls, Array, default: node['perlbrew']['perls']
 property :upgrade, [true, false], default: node['perlbrew']['self_upgrade']
 
 action :install do
-  %w( patch perl curl ).each do |p|
+  %w( curl gcc make patch perl ).each do |p|
     package p
   end
 

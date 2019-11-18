@@ -19,6 +19,4 @@
 # limitations under the License.
 #
 
-build_essential
-
 perlbrew node['perlbrew']['perlbrew_root']

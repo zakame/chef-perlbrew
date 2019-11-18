@@ -1,5 +1,6 @@
 ## 0.5.1
 * Update perlbrew to 0.87.
+* Explicitly install build dependencies such as gcc and make instead of using build_essential.
 
 ## 0.5.0
 * Bump minimum required Chef version to 14.

@@ -1,10 +1,7 @@
 apt_update
 
-build_essential
-
-perlbrew '/opt/perlbrew' do
-  upgrade false
-end
+node.default['perlbrew']['self_upgrade'] = false
+include_recipe 'perlbrew::default'
 
 perlbrew_perl '5.30.1' do
   install_options '--noman --notest'
