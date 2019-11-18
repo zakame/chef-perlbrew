@@ -1,3 +1,6 @@
+## 0.5.1
+* Update perlbrew to 0.87.
+
 ## 0.5.0
 * Bump minimum required Chef version to 14.
 * Add a TESTING.md to document how to test chef-perlbrew.
