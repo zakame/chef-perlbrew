@@ -29,9 +29,8 @@ the installation process:
 * patch
 
 Perlbrew compiles perl from source and requires a standard compiler toolchain to
-be available.  The bundled 'perlbrew' recipe installs this toolchain automatically
-using the [build-essential](https://supermarket.chef.io/cookbooks/build-essential)
-cookbook, if they are missing.
+be available; this cookbook will install this toolchain automatically, if they
+are missing.
 
 ATTRIBUTES
 ----------
