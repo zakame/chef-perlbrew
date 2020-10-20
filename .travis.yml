@@ -28,7 +28,7 @@ matrix:
   fast_finish: true
 
 before_install:
-  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - eval "$(/opt/chef-workstation/bin/chef shell-init bash)"
   - chef --version
 
 # We are using ChefDK so no gem install required.
