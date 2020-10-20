@@ -1,6 +1,6 @@
 #
 # Author:: J.R. Mash
-# Cookbook Name:: perlbrew
+# Cookbook:: perlbrew
 # Resource:: default (perlbrew)
 #
 # Copyright:: 2015, J.R. Mash <jrmash@cpan.org>
@@ -19,6 +19,7 @@
 #
 
 resource_name :perlbrew
+provides :perlbrew
 
 property :root, String, name_property: true
 

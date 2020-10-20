@@ -1,6 +1,6 @@
 #
 # Author:: J.R. Mash
-# Cookbook Name:: perlbrew
+# Cookbook:: perlbrew
 # Resource:: perlbrew_switch
 #
 # Copyright:: 2015, J.R. Mash <jrmash@cpan.org>
@@ -17,8 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-resource_name :perlbrew_switch
 
 property :version, String, name_property: true
 property :root, String, default: node['perlbrew']['perlbrew_root']

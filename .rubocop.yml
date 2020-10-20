@@ -1,4 +1,4 @@
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 Layout/CaseIndentation:
   IndentOneStep: true
@@ -37,7 +37,7 @@ Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
 Layout/SpaceInsideParens:
   Enabled: false
-Layout/TrailingBlankLines:
+Layout/TrailingEmptyLines:
   Enabled: false
 Layout/TrailingWhitespace:
   Enabled: false

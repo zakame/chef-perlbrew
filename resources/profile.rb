@@ -1,7 +1,7 @@
 #
 # Author:: J.R. Mash
 # Contributors:: Jaryd Malbin <jaryd@duckduckgo.com>
-# Cookbook Name:: perlbrew
+# Cookbook:: perlbrew
 # Resource:: perlbrew_profile
 #
 # Copyright:: 2015, J.R. Mash <jrmash@cpan.org>
@@ -18,8 +18,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-resource_name :perlbrew_profile
 
 property :script, String, name_property: true
 property :group, String, default: node['perlbrew']['profile']['group']

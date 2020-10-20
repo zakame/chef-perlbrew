@@ -1,6 +1,6 @@
 #
 # Author:: David A. Golden
-# Cookbook Name:: perlbrew
+# Cookbook:: perlbrew
 # Resource:: perlbrew_lib
 #
 # Copyright:: 2012, David A. Golden <dagolden@cpan.org>
@@ -17,8 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-resource_name :perlbrew_lib
 
 property :lib, String, name_property: true
 property :perlbrew, String

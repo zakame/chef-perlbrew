@@ -1,7 +1,7 @@
 #
 # Author:: David A. Golden
 # Contributors:: J.R. Mash <jrmash@cpan.org>
-# Cookbook Name:: perlbrew
+# Cookbook:: perlbrew
 # Recipe:: default
 #
 # Copyright:: 2012, David A. Golden <dagolden@cpan.org>

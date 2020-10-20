@@ -1,6 +1,6 @@
 #
 # Author:: David A. Golden
-# Cookbook Name:: perlbrew
+# Cookbook:: perlbrew
 # Attribute:: default
 #
 # Copyright:: 2012, David A. Golden <dagolden@cpan.org>
