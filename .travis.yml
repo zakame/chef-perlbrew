@@ -1,13 +1,13 @@
 ---
-dist: trusty
+dist: xenial
 sudo: required
 services: docker
 addons:
   apt:
     sources:
-      - chef-stable-trusty
+      - chef-stable-xenial
     packages:
-      - chefdk
+      - chef-workstation
 
 cache:
   apt: true
@@ -22,7 +22,7 @@ env:
     - CMD="kitchen verify amazonlinux-2"
     - CMD="kitchen verify centos-7"
     - CMD="kitchen verify debian-10"
-    - CMD="kitchen verify ubuntu-1804"
+    - CMD="kitchen verify ubuntu-2004"
 
 matrix:
   fast_finish: true
