@@ -3,9 +3,7 @@ name: Test on supported platforms
 on:
   push:
     branches:
-    - '**'
-    tags-ignore:
-    - '*'
+    - master
   pull_request:
 
 jobs:

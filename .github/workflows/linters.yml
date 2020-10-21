@@ -3,13 +3,11 @@ name: Run code linters
 on:
   push:
     branches:
-    - '**'
-    tags-ignore:
-    - '*'
+    - master
   pull_request:
 
 jobs:
-  test:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
