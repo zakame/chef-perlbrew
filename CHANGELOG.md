@@ -1,3 +1,7 @@
+## 0.5.2
+* Update perlbrew to 0.89.
+* Switch over CI from Travis CI to GitHub Actions.
+
 ## 0.5.1
 * Update perlbrew to 0.87.
 * Explicitly install build dependencies such as gcc and make instead of using build_essential.
