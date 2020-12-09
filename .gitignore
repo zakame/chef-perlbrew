@@ -12,7 +12,7 @@ Berksfile.lock
 .bundle/
 .cache/
 .kitchen/
-.kitchen.local.yml
+kitchen.local.yml
 .vagrant/
 .vagrant.d/
 bin/
