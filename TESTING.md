@@ -18,11 +18,6 @@ To check for cookbook lint, do
 
     chef exec cookstyle .
 
-To check for cookbook common problems such as using deprecated forms and
-correctness, do
-
-    chef exec foodcritic .
-
 ## Integration testing
 
 To see a list of available instances, do

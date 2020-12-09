@@ -1,4 +1,4 @@
-name: Run code linters
+name: Run cookstyle
 
 on:
   push:
@@ -15,10 +15,9 @@ jobs:
       run: |
         wget -qO - https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chef-workstation -s once
         chef --version
-    - name: Run linters
+    - name: Run cookstyle
       env:
         CHEF_LICENSE: accept-no-persist
       run: |
         eval "$(chef shell-init bash)"
         cookstyle --display-cop-names --extra-details
-        foodcritic .
